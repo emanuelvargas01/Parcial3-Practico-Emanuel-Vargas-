@@ -1,0 +1,31 @@
+create database Parcial3Login;
+use Parcial3Login;
+CREATE TABLE Users
+(
+    iDUsuario INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(50) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+    passHash VARCHAR(255) NOT NULL,
+    activo BOOLEAN DEFAULT TRUE
+);
+
+
+CREATE TABLE TryLog
+(
+    idInt INT AUTO_INCREMENT PRIMARY KEY, -- Es el id de los intentos de login
+    iDUsuario INT NULL,
+    UserE VARCHAR(50) NOT NULL, #Es el nombre del usuario que ingreso
+    Fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    Success BOOLEAN NOT NULL,
+
+    FOREIGN KEY (iDUsuario)
+        REFERENCES Users(iDUsuario)
+);
+
+
+CREATE USER 'app_controller'@'localhost'
+IDENTIFIED BY 'P@rcial3P@ssword';
+GRANT SELECT, INSERT, UPDATE
+ON Parcial3Login.*
+TO 'app_controller'@'localhost';
+flush privileges
